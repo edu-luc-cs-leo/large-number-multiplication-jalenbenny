@@ -1,0 +1,60 @@
+import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
+
+public class GradeSchoolMultiplication {
+    private static final int DEFAULT_BASE = 10;
+
+    public static int[] multiply(final int[] x, final int[] y, final int base) {
+        int m = x.length;
+        int n = y.length;
+        int[] result = new int[m + n];
+        List<String> partialProducts = new ArrayList<>();
+
+        for (int i = m - 1; i >= 0; i--) {
+            int[] currentPartial = new int[m + n];
+            for (int j = n - 1; j >= 0; j--) {
+                int product = x[i] * y[j] + currentPartial[i + j + 1];
+                currentPartial[i + j + 1] = product % base;
+                currentPartial[i + j] += product / base;
+            }
+            partialProducts.add(Arrays.toString(currentPartial));
+            
+            for (int k = 0; k < m + n; k++) {
+                result[k] += currentPartial[k];
+                if (result[k] >= base) {
+                    result[k] -= base;
+                    result[k - 1]++;
+                }
+            }
+        }
+
+        // Remove leading zeros
+        int firstNonZero = 0;
+        while (firstNonZero < result.length && result[firstNonZero] == 0) {
+            firstNonZero++;
+        }
+        if (firstNonZero == result.length) {
+            return new int[]{0};
+        }
+
+        System.out.println("Partial Products:");
+        for (int i = 0; i < partialProducts.size(); i++) {
+            System.out.println("  " + x[x.length - 1 - i] + " * " + Arrays.toString(y) + " = " + partialProducts.get(i));
+        }
+
+        return Arrays.copyOfRange(result, firstNonZero, result.length);
+    }
+
+    public static int[] multiply(final int[] x, final int[] y) {
+        return multiply(x, y, DEFAULT_BASE);
+    }
+
+    public static void main(String[] args) {
+        // Example: multiplying 123 (as [1, 2, 3]) by 456 (as [4, 5, 6])
+        int[] x = {1, 2, 3};  // 123
+        int[] y = {4, 5, 6};  // 456
+        int[] result = multiply(x, y);
+        System.out.println("Multiplication Result: " + Arrays.toString(result));
+    }
+}
