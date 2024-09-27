@@ -1,9 +1,9 @@
-public class Person implements Comparable<Person>, SillyActions {
+import java.util.Random;
 
+public class Person implements Comparable<Person>, SillyActions {
     private static final String DEFAULT_LAST_NAME = "LNU";
     private static final String DEFAULT_FIRST_NAME = "FNU";
     private static final int DEFAULT_YEAR_BORN = 1800;
-
     private String firstName;
     private String lastName;
     private int yearBorn;
@@ -18,49 +18,57 @@ public class Person implements Comparable<Person>, SillyActions {
         this(firstName, DEFAULT_LAST_NAME, DEFAULT_YEAR_BORN);
     }
 
-    /** Default constructor */
     public Person() {
         this(DEFAULT_FIRST_NAME, DEFAULT_LAST_NAME, DEFAULT_YEAR_BORN);
     }
 
-    /**
-     * Implements the Comparable interface to determine the relative order of two
-     * persons based on their age.
-     * 
-     */
     public int compareTo(Person other) {
         return other.getYearBorn() - this.yearBorn;
-    } // method compareTo
+    }
 
     @Override
     public String toString() {
         return "Person [firstName=" + firstName + ", lastName=" + lastName + ", yearBorn=" + yearBorn + "]";
-    } // method toString
-
-    //------------------- AUTO GENERATED METHODS ------------------------------
-    
-    public String getFirstName() {
-        return this.firstName;
     }
 
-    public String getLastName() {
-        return this.lastName;
+    @Override
+    public void makeRandomSound() {
+        Random random = new Random();
+        int index = random.nextInt(PoemWords.words.length);
+        System.out.println("*" + PoemWords.words[index] + "*");
     }
 
-    public int getYearBorn() {
-        return this.yearBorn;
+    @Override
+    public void performSillyDance() {
+        System.out.println(firstName + " is doing a silly little dance:");
+        System.out.println("* Takes a step to the left, hops twice backwards, then does one big leap forward*");
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    @Override
+    public String reciteAlphabetBackwards() {
+        StringBuilder sb = new StringBuilder("zyxwvutsrqponmlkjihgfdcba");
+        sb.deleteCharAt(8); // Forget one letter
+        return sb.toString();
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    @Override
+    public void countToTenWeirdly() {
+        System.out.println("1, 3, 5, 7, 9, 11!");
     }
 
-    public void setYearBorn(int yearBorn) {
-        this.yearBorn = yearBorn;
+    @Override
+    public String createWhimsicalPoem(String topic) {
+        StringBuilder poem = new StringBuilder();
+        poem.append("A whimsical poem about ").append(topic).append(":\n");
+        poem.append(PoemWords.words[new Random().nextInt(PoemWords.words.length)]).append(" ");
+        poem.append(PoemWords.words[new Random().nextInt(PoemWords.words.length)]).append(" ");
+        poem.append(PoemWords.words[new Random().nextInt(PoemWords.words.length)]).append(".");
+        return poem.toString();
     }
 
+    @Override
+    public void winStateLottery() {
+        System.out.println("*Drumroll please...* The winning HOOSIER LOTTERY numbers are: 3, 22, 21, 7, 88, 8.");
+    }
 }
+
