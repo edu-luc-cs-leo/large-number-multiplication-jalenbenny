@@ -1,3 +1,7 @@
+/**
+ * represents a train line with stations
+ * this class manages a linked list of train stations
+ */
 public class TrainLine {
 
     private String name;
@@ -5,7 +9,12 @@ public class TrainLine {
     private TrainStation tail;
     private int numberOfStations;
 
-    /** Full constructor */
+    /**
+     * constructs a trainline with a name and an initial station
+     *
+     * @param name the name of the train line
+     * @param head the first station in the line
+     */
     public TrainLine(String name, TrainStation head) {
         this.name = name;
         this.head = head;
@@ -16,11 +25,20 @@ public class TrainLine {
         this.tail = head;
     }
 
-    /** Basic constructor */
+    /**
+     * constructs an empty trainline with only a name
+     *
+     * @param name the name of the train line
+     */
     public TrainLine(String name) {
         this(name, null);
     }
 
+    /**
+     * adds a new station to the end of the train line
+     *
+     * @param name the name of the new station
+     */
     public void add(String name) {
         TrainStation newStation = new TrainStation(name);
         if (this.head == null) {
@@ -33,10 +51,21 @@ public class TrainLine {
         this.numberOfStations++;
     }
 
+    /**
+     * returns the number of stations in the train line
+     *
+     * @return the number of stations
+     */
     public int getNumberOfStations() {
         return numberOfStations;
     }
 
+    /**
+     * checks if a station with the given name exists in the train line
+     *
+     * @param name the name of the station to search for
+     * @return true if the station exists, false otherwise
+     */
     public boolean contains(String name) {
         TrainStation current = head;
         while (current != null) {
@@ -48,6 +77,12 @@ public class TrainLine {
         return false;
     }
 
+    /**
+     * finds the index of a station with the given name
+     *
+     * @param name the name of the station to find
+     * @return the index of the station if found, -1 otherwise
+     */
     public int indexOf(String name) {
         TrainStation current = head;
         int index = 0;
@@ -61,6 +96,11 @@ public class TrainLine {
         return -1;
     }
 
+    /**
+     * returns a string representation of the train line in reverse order
+     *
+     * @return a string with station names in reverse order, each on a new line
+     */
     public String reverseList() {
         if (head == null) {
             return "";
@@ -68,6 +108,12 @@ public class TrainLine {
         return reverseListHelper(tail);
     }
 
+    /**
+     * helper method for reverselist
+     *
+     * @param station the current station in the recursion
+     * @return a string representation of stations from the current to the head
+     */
     private String reverseListHelper(TrainStation station) {
         if (station == null) {
             return "";
@@ -75,10 +121,20 @@ public class TrainLine {
         return station.getName() + "\n" + reverseListHelper(station.getPrevious());
     }
 
+    /**
+     * checks if the train line is empty
+     *
+     * @return true if the train line has no stations, false otherwise
+     */
     public boolean isEmpty() {
         return head == null;
     }
 
+    /**
+     * main method to test the trainline class functionality
+     *
+     * @param args command line arguments (not used)
+     */
     public static void main(String[] args) {
         // A few station names
         String[] stationNames = { "Howard", "Jarvis", "Morse",
