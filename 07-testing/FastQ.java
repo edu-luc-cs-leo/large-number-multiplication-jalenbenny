@@ -1,36 +1,56 @@
 public class FastQ {
-
     private String[] array;
-    private int size;
-    private int used;
     private int front;
     private int back;
+    private int used;
+    private String result;
 
-    private static final int DEFAULT_SIZE = 4;
+    public FastQ(int capacity) {
+        array = new String[capacity];
+        front = 0;
+        back = 0;
+        used = 0;
+        result = "";
+    }
 
-    /** Full constructor */
-    public FastQ(int size) {
-        if (size <1){
-            size = DEFAULT_SIZE;
+    public String execute(String operation, String value) {
+        result = "";
+
+        if (operation.equals("remove")) {
+            if (used > 0) {
+                result = array[front];
+                array[front] = null;
+                front = (front + 1) % array.length;
+                used--;
+            }
+        } else if (operation.equals("add")) {
+            if (used < array.length) {
+                array[back] = value;
+                back = (back + 1) % array.length;
+                used++;
+                result = "true";
+            } else {
+                result = "false";
+            }
+        } else if (operation.equals("isEmpty")) {
+            result = Boolean.toString(used == 0);
+        } else if (operation.equals("isFull")) {
+            result = Boolean.toString(used == array.length);
+        } else if (operation.equals("size")) {
+            result = Integer.toString(used);
         }
-        this.size = size;
-        this.array = new String[this.size];
-        this.used = 0;
-        this.front = 0;
-        this.back = 0;
-    } // full constructor
 
-    /** Default constructor */
-    public FastQ() {
-        this(DEFAULT_SIZE);
-    } // default constructor
+        return result;
+    }
 
-    public boolean add(String string) {
-        return false;
-    } // method add
+    public static void main(String[] args) {
+        FastQ queue = new FastQ(5);
+        System.out.println("Add 'A': " + queue.execute("add", "A"));
+        System.out.println("Add 'B': " + queue.execute("add", "B"));
+        System.out.println("Remove: " + queue.execute("remove", null));
+        System.out.println("Is Empty: " + queue.execute("isEmpty", null));
+        System.out.println("Size: " + queue.execute("size", null));
+    }
+}
 
-    public String remove() {
-        return null;
-    } // method remove
-    
-} // class FastQ
+
