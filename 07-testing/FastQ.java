@@ -1,3 +1,6 @@
+/**
+ * represents a fast queue data structure
+ */
 public class FastQ {
     private String[] array;
     private int front;
@@ -5,6 +8,10 @@ public class FastQ {
     private int used;
     private String result;
 
+    /**
+     * constructs a fastq with given capacity
+     * @param capacity the maximum number of elements the queue can hold
+     */
     public FastQ(int capacity) {
         array = new String[capacity];
         front = 0;
@@ -13,9 +20,14 @@ public class FastQ {
         result = "";
     }
 
+    /**
+     * executes an operation on the queue
+     * @param operation the operation to perform ("add", "remove", "isEmpty", "isFull", "size")
+     * @param value the value to add (only for "add" operation)
+     * @return the result of the operation
+     */
     public String execute(String operation, String value) {
         result = "";
-
         if (operation.equals("remove")) {
             if (used > 0) {
                 result = array[front];
@@ -39,10 +51,13 @@ public class FastQ {
         } else if (operation.equals("size")) {
             result = Integer.toString(used);
         }
-
         return result;
     }
 
+    /**
+     * main method to demonstrate fastq operations
+     * @param args command line arguments (not used)
+     */
     public static void main(String[] args) {
         FastQ queue = new FastQ(5);
         System.out.println("Add 'A': " + queue.execute("add", "A"));
@@ -52,5 +67,3 @@ public class FastQ {
         System.out.println("Size: " + queue.execute("size", null));
     }
 }
-
-
